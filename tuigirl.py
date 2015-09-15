@@ -33,16 +33,14 @@ class Tuigirl:
 
     def GetImgs(self, detailPage):
         pattern = re.compile('<li>.*?<img.*?src="(.*?)"',re.S)
-        pattern1 = re.compile('</a>.*?<a.*?href=".*?html">(.*?)</a>', re.S)
-        num = re.findall(pattern1, detailPage)
         images = re.findall(pattern, detailPage)
-        print(num)
+        return images
+
 
     def Saveimgs(self, images, name):
         number = 1
         for imageURL in images:
             SplitPath = imageURL.split('.')
-            Filetail = ''
             if len(SplitPath) > 3:
                 Filetail = 'jpg'
                 filename = name + '/' + str(number) + '.' + Filetail
@@ -80,13 +78,13 @@ class Tuigirl:
             DetailPage = self.GetDetailPage(DetailURL)
             #获取个人页面中所有图片列表
             images = self.GetImgs(DetailPage)
-            '''self.mkdir(name)
+            self.mkdir(name)
             #保存个人图片
-            self.Saveimgs(images, name)'''
+            self.Saveimgs(images, name)
 
     def SavePagesInfo(self, start, end):
         for i in range(start, end+1):
             self.SavePageInfo(i)
 
 tuigirl = Tuigirl()
-tuigirl.SavePageInfo(1)
+tuigirl.SavePagesInfo(1, 2)
